@@ -59,7 +59,7 @@ int	main(int argc, char *argv[])
 	}
 	y = -1;
 	while (++y < b_height)
-		write(1, paper + y * b_width, b_width) && write(1, "\n", 1);
+		write(1, paper + y * b_width, b_width) ; write(1, "\n", 1);
 	free(paper);
 	fclose(file);
 	return(0);
