@@ -4,14 +4,6 @@
 #include <string.h>
 #include <math.h>
 
-int ft_strlen(char *str)
-{
-	int	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
 int	check_pos(float x, float y, float id_x, float id_y, float radius)
 {
 	float distance = sqrtf(powf(x - id_x, 2.) + powf(y - id_y, 2.));

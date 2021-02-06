@@ -3,14 +3,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-int ft_strlen(char *str)
-{
-	int	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
 int	check_pos(float x, float y, float id_x, float id_y, float width, float height)
 {
 	if (x < id_x || x > id_x + width || y < id_y || y > id_y + height)
