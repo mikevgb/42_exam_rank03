@@ -3,13 +3,29 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#define ERR1 "Error: argument\n"
+#define ERR2 "Error: Operation file corrupted\n"
+
+int ft_strlen(char *str)
+{
+	int	i = 0;
+	while (str[i])
+		i++;
+	return (i);
+}
+
+int	ft_perror(char *str)
+{
+	write(1, str, ft_strlen(str));
+	return (1);
+}
 
 int	check_pos(float x, float y, float id_x, float id_y, float radius)
 {
-	float distance = sqrtf(powf(x - id_x, 2.) + powf(y - id_y, 2.));
+	float distance = sqrtf(powf(x - id_x, 2) + powf(y - id_y, 2));
 	if (distance <= radius)
 	{
-		if ((radius - distance) < 1.00000000)
+		if ((radius - distance) < 1)
 			return (0);
 		return (1);
 	}
@@ -24,12 +40,12 @@ int	main(int argc, char *argv[])
 	float	id_x, id_y, radius;
 
 	if (argc != 2)
-		return (write(1, "Error: argument\n", 16));
+		return (ft_perror(ERR1));
 	if (!(file = fopen(argv[1], "r")) ||
-		(fscanf(file, "%d %d %c\n", &b_width, &b_height, &background) != 3) ||
+		(fscanf(file, "%i %i %c\n", &b_width, &b_height, &background) != 3) ||
 		(!(b_width > 0 && b_width <= 300 && b_height > 0 && b_height <= 300)) ||
 		(!(paper = (char *)malloc(sizeof(char) * (b_width * b_height)))))
-		return (write(1, "Error: Operation file corrupted\n", 32));
+		return (ft_perror(ERR2));
 	memset(paper, background, b_width * b_height);
 	while ((read = fscanf(file, "%c %f %f %f %c\n", &id, &id_x, &id_y, &radius, &color)) == 5)
 	{
@@ -50,11 +66,14 @@ int	main(int argc, char *argv[])
 	if (read != -1)
 	{
 		free(paper);
-		return (write(1, "Error: Operation file corrupted\n", 32));
+		return (ft_perror(ERR2));
 	}
 	y = -1;
 	while (++y < b_height)
-		write(1, paper + y * b_width, b_width) ; write(1, "\n", 1);
+	{
+		write(1, paper + y * b_width, b_width);
+		write(1, "\n", 1);
+	}	
 	free(paper);
 	fclose(file);
 	return (0);
