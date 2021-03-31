@@ -1,12 +1,6 @@
-#include <stdio.h>
-#include <unistd.h>
-#include <stdlib.h>
-#include <string.h>
-#include <math.h>
-#define ERR1 "Error: argument\n"
-#define ERR2 "Error: Operation file corrupted\n"
+#include "micro_paint.h"
 
-int ft_strlen(char *str)
+int		ft_strlen(char *str)
 {
 	int	i = 0;
 	while (str[i])
@@ -14,13 +8,13 @@ int ft_strlen(char *str)
 	return (i);
 }
 
-int	ft_perror(char *str)
+int		ft_perror(char *str)
 {
 	write(1, str, ft_strlen(str));
 	return (1);
 }
 
-int	check_pos(float x, float y, float id_x, float id_y, float radius)
+int		check_pos(float x, float y, float id_x, float id_y, float radius)
 {
 	float distance = sqrtf(powf(x - id_x, 2) + powf(y - id_y, 2));
 	if (distance <= radius)
@@ -32,7 +26,7 @@ int	check_pos(float x, float y, float id_x, float id_y, float radius)
 	return (2);
 }
 
-int	main(int argc, char *argv[])
+int		main(int argc, char *argv[])
 {
 	FILE	*file;
 	char	*paper, background, id, color;
@@ -51,11 +45,11 @@ int	main(int argc, char *argv[])
 	{
 		if (!(radius > 0) || !(id == 'C' || id == 'c'))
 			break;
-		y = -1;
-		while (++y < b_height)
+		x = -1;
+		while (++x < b_width)
 		{
-			x = -1;
-			while (++x < b_width)
+			y = -1;
+			while (++y < b_height)
 			{
 				pos = check_pos((float)x, (float)y, id_x, id_y, radius);
 				if (pos == 0 || (pos == 1 && id == 'C'))
